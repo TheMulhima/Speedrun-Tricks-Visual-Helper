@@ -21,7 +21,7 @@ A mod that changes the color of the knight to help indicate when they can do an 
 3. Dash
   - It shows when you can dash.
   - e.g. of use -> practicing timing dashes.
-  - Note: if the color doesnt change when you chain dashes, it means you dashed within 1 frame after completing the dash (so that's the optimal dash timing). If you see white flashes, your timing is a bit off.
+  - Note: if the color doesn't change when you chain dashes, it means you dashed within 1 frame after completing the dash (so that's the optimal dash timing). If you see white flashes, your timing is a bit off.
 4. WallJump
   - It shows when you can wall jump
   - e.g. of use -> QGA skip
