@@ -1,5 +1,5 @@
 # Speedrun-Tricks-Visual-Helper
-A mod that changes the color of the knight to indicate when they can do an action which can help learning/doing skips. It shows when fireball, dash, or wall jumping are available and also when the knight is facing left or right (to see turnarounds). You can switch what action causes the color change by pressing the key that was binded to ChangeModeKey in the GlobalSettings file.
+A mod that changes the color of the knight to indicate when they can do an action which can help learning skips. It shows when fireball, dash, or wall jumping are available and also when the knight is facing left or right (to see turnarounds). You can switch what action causes the color change by pressing the key that was binded to ChangeModeKey in the GlobalSettings file.
 
 # How its meant to be used
 It is meant to be used as a indicator for how well you are doing the skips **after** you have finished them. It is not for helping do the skips in real time because: 1) reaction time and 2) input lag.
