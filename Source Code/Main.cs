@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Speedrun_Tricks_Visual_Helper_1221
 {
-    public class SpeedrunTricksVisualHelper:Mod<VoidModSettings,GlobalSettings>
+    public class SpeedrunTricksVisualHelper:Mod<VoidModSettings,GlobalSettings>,ITogglableMod
     {
         public override string GetVersion() => Assembly.GetExecutingAssembly().GetName().Version.ToString();
         
