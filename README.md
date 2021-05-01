@@ -5,11 +5,11 @@ A mod that changes the color of the knight to help indicate when they can do an 
 
 
 # How to use
-- Download the Modding API 
-- From the releases tab, download the version that corresponds to your game version and place it in the mods folder.
-- Run the game once with the mod installed and verify that it is installed by seeing if it appears on the top left of the title screen. Then close the game and open the .json file in the saves folder.
+- Download the [Modding API](https://github.com/TheMulhima/Speedrun-Tricks-Visual-Helper/blob/master/README.md#downloading-modding-api). 
+- From the releases tab, download the version that corresponds to your game version and place it in the [Mods folder](https://github.com/TheMulhima/Speedrun-Tricks-Visual-Helper/blob/master/README.md#mods-folder).
+- Run the game once with the mod installed and verify that it is installed by seeing if it appears on the top left of the title screen. Then close the game and open the .json file in the [saves folder](https://github.com/TheMulhima/Speedrun-Tricks-Visual-Helper/blob/master/README.md#saves-folder).
 - Add a number or lower case letter in `ChangeModeKey` to add a key bind for changing modes. e.g.  `ChangeModeKey = "b"`.
-- Open the game and press the bound key to switch modes
+- Open the game and press the bound key to switch between modes.
 
 # Modes Currently Available:
 1. Turnaround:
