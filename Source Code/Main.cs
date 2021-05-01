@@ -74,22 +74,45 @@ namespace Speedrun_Tricks_Visual_Helper
 
             if (current_setting == 1)
             {
-                if (!HCS.onGround)
+                if (settings.Turnaround_OnlyinAir)
+                {
+                    if (!HCS.onGround)
+                    {
+                        if (HCS.facingRight) Flash(settings.Color_true);
+                        if (!HCS.facingRight) Flash(settings.Color_false);
+                        
+                        if (settings.Show_CanFireball_InLogs_While_InTurnAround_Mode)
+                        {
+                            if (HC.CanCast()) Log("Can Cast");
+                            else Log("Not able to use spells");
+                        }
+                    }
+                }
+                else
                 {
                     if (HCS.facingRight) Flash(settings.Color_true);
                     if (!HCS.facingRight) Flash(settings.Color_false);
-                    
+                        
                     if (settings.Show_CanFireball_InLogs_While_InTurnAround_Mode)
                     {
                         if (HC.CanCast()) Log("Can Cast");
                         else Log("Not able to use spells");
-                    }
+                    }    
                 }
+
             }
 
             if (current_setting == 2)
             {
-                if (!HCS.onGround)
+                if (settings.Fireball_OnlyinAir)
+                {
+                    if (!HCS.onGround)
+                    {
+                        if (HC.CanCast()) Flash(settings.Color_true);
+                        else Flash(settings.Color_false);
+                    }
+                }
+                else
                 {
                     if (HC.CanCast()) Flash(settings.Color_true);
                     else Flash(settings.Color_false);
@@ -98,12 +121,20 @@ namespace Speedrun_Tricks_Visual_Helper
 
             if (current_setting == 3)
             {
-                if (HCS.onGround)
+                if(settings.Dash_OnlyonGround)
+                {
+                    if (HCS.onGround)
+                    {
+                        if (CanDash()) Flash(settings.Color_true);
+
+                        else Flash(settings.Color_false);
+                    }
+                }
+                else
                 {
                     if (CanDash()) Flash(settings.Color_true);
 
                     else Flash(settings.Color_false);
-                    
                 }
             }
 
