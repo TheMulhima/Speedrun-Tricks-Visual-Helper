@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Modding;
 
-namespace Speedrun_Tricks_Visual_Helper
+namespace Speedrun_Tricks_Visual_Helper_1221
 {
-    public class GlobalModSettings : ModSettings
+    
+    public class GlobalSettings : IModSettings
     {
         public string ChangeModeKey = "";
         public bool Current_Mode_Name_AlwaysVisible = false;
