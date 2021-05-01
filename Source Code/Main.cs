@@ -1,39 +1,36 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Reflection;
 using Modding;
 using UnityEngine;
 using UnityEngine.UI;
-using GlobalEnums;
 
-namespace Speedrun_Tricks_Visual_Helper
+
+
+namespace Speedrun_Tricks_Visual_Helper_1221
 {
-    public class SpeedrunTricksVisualHelper:Mod, ITogglableMod
+    public class SpeedrunTricksVisualHelper:Mod<VoidModSettings,GlobalSettings>
     {
-        public SpeedrunTricksVisualHelper() : base("Speedrun Tricks Visual Helper") { }
         public override string GetVersion() => Assembly.GetExecutingAssembly().GetName().Version.ToString();
         
         internal static SpeedrunTricksVisualHelper Instance;
+        internal static GlobalSettings settings;
         
-        public GlobalModSettings settings = new GlobalModSettings(); 
-
-        public override ModSettings GlobalSettings
-        {
-            get => settings;
-            set => settings = (GlobalModSettings) value;
-        }
         private Text _textObj;
         private GameObject _canvas;
         
         private int current_setting, WhichSetting;
-  
+        
+        
         public override void Initialize()
         {
             Instance = this;
             ModHooks.Instance.HeroUpdateHook += Instance_HeroUpdateHook;
+            ModHooks.Instance.ApplicationQuitHook += SaveSettings;
             ModHooks.Instance.SavegameLoadHook += CheckKeyBind_saveGame;
             ModHooks.Instance.NewGameHook += CheckKeyBind_newGame;
-
+            settings = GlobalSettings;
         }
+
         private void CheckKeyBind_newGame()
         {
             if (settings.ChangeModeKey == "")
@@ -57,6 +54,13 @@ namespace Speedrun_Tricks_Visual_Helper
             yield return new WaitForSecondsRealtime(3f);
             
             PrintText(Text);
+        }
+
+        
+        private void SaveSettings()
+        {
+            SaveGlobalSettings();
+            Instance.Log("Saved");
         }
         private void Instance_HeroUpdateHook()
         {
@@ -120,6 +124,8 @@ namespace Speedrun_Tricks_Visual_Helper
                 }
             }
         }
+            
+        
 
         //flash values
         private float amount = 1f;
@@ -170,12 +176,14 @@ namespace Speedrun_Tricks_Visual_Helper
             if (WhichSetting == 4) WhichSetting = 0;
             else WhichSetting++;
         }
+        
         private bool CanDash()
         {
             return (bool) typeof(HeroController).GetMethod("CanDash", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(HeroController.instance, null);
         }
 
-        #region Thank you 56 for allowing me to steal HC code. 
+        
+        #region Thank you 56 for allowing me to steal this code. 
         //The original can be found in: https://github.com/fifty-six/HollowKnight.Lightbringer
         private void CreateCanvas()
         {
@@ -256,12 +264,9 @@ namespace Speedrun_Tricks_Visual_Helper
         public void Unload()
         {
             ModHooks.Instance.HeroUpdateHook -= Instance_HeroUpdateHook;
+            ModHooks.Instance.ApplicationQuitHook -= SaveSettings;
             ModHooks.Instance.SavegameLoadHook -= CheckKeyBind_saveGame;
             ModHooks.Instance.NewGameHook -= CheckKeyBind_newGame;
         }
-
-        
     }
 }
-
- 
