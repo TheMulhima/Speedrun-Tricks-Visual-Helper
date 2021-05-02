@@ -58,3 +58,6 @@ It is meant to be used as a indicator for how well you are doing the skips **aft
     - Place it in `Hollow Knight\hollow_knight_Data\Managed`.
   - If on mac:
     - Place it in `hollow_knight.app\contents\Resources\Data\Managed\`.
+
+## Future Updates (No promises tho)
+- Nail Swing mode
