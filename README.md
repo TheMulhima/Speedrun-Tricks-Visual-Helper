@@ -59,5 +59,6 @@ It is meant to be used as a indicator for how well you are doing the skips **aft
   - If on mac:
     - Place it in `hollow_knight.app\contents\Resources\Data\Managed\`.
 
-## Future Updates (No promises tho)
-- Nail Swing mode
+## Future Updates
+- Mode for showing if able to attack
+- Mode for showing if able to jump
