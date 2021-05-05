@@ -264,9 +264,9 @@ namespace Speedrun_Tricks_Visual_Helper
                         break;
                 }
             }
-            else if (WhatPrint == "No Key Bound. Please Bind a Key")
+            else if (WhatPrint == "No Key Bound, Please Bind a Key")
             {
-                textToPrint = "No Key Bound. Please Bind a Key";
+                textToPrint = "No Key Bound, Please Bind a Key";
             }
             else
             {
