@@ -6,7 +6,6 @@ namespace Speedrun_Tricks_Visual_Helper
     public class GlobalModSettings : ModSettings
     {
         public string ChangeModeKey = "";
-        public bool Current_Mode_Name_AlwaysVisible = false;
         public string Color_true = "white";
         public string Color_false = "black";
         public bool Turnaround_OnlyinAir = false; 

@@ -1,9 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Reflection;
 using Modding;
 using UnityEngine;
 using UnityEngine.UI;
-using GlobalEnums;
 
 namespace Speedrun_Tricks_Visual_Helper
 {
@@ -38,29 +38,25 @@ namespace Speedrun_Tricks_Visual_Helper
         {
             if (settings.ChangeModeKey == "")
             {
-                GameManager.instance.StartCoroutine((PleaseWaitToShowText(true, "No Key Bound, Please Bind a Key")));
+                GameManager.instance.StartCoroutine((BindKey()));
             }
         }
 
         private void CheckKeyBind_saveGame(int id)
         {
-            if (settings.ChangeModeKey == "")
-            {
-                GameManager.instance.StartCoroutine((PleaseWaitToShowText(true, "No Key Bound, Please Bind a Key")));
-            }
+            CheckKeyBind_newGame();
         }
 
-        private IEnumerator PleaseWaitToShowText(bool Check_for_input,string Text)
+        private IEnumerator BindKey()
         {
-            if (Check_for_input) yield return new WaitUntil(()=>HeroController.instance.CanInput());
-                
+            yield return new WaitUntil(()=>HeroController.instance.CanInput());
+
             yield return new WaitForSecondsRealtime(3f);
             
-            PrintText(Text);
+            PrintText("No Key Present. Please Bind a Key");
         }
         private void Instance_HeroUpdateHook()
         {
-            if (HeroController.instance == null) return; 
             if (settings.ChangeModeKey == "") return;
             
             var HC = HeroController.instance;
@@ -70,6 +66,7 @@ namespace Speedrun_Tricks_Visual_Helper
             {
                 ChangeSetting();
                 PrintText("Change Setting");
+
             }
 
             if (current_setting == 1)
@@ -78,26 +75,22 @@ namespace Speedrun_Tricks_Visual_Helper
                 {
                     if (!HCS.onGround)
                     {
-                        if (HCS.facingRight) Flash(settings.Color_true);
-                        if (!HCS.facingRight) Flash(settings.Color_false);
-                        
+                        Flash(HCS.facingRight ? settings.Color_true : settings.Color_false);
+
                         if (settings.Show_CanFireball_InLogs_While_InTurnAround_Mode)
                         {
-                            if (HC.CanCast()) Log("Can Cast");
-                            else Log("Not able to use spells");
+                            Log(HC.CanCast() ? "Can Cast" : "Not able to use spells");
                         }
                     }
                 }
                 else
                 {
-                    if (HCS.facingRight) Flash(settings.Color_true);
-                    if (!HCS.facingRight) Flash(settings.Color_false);
-                        
+                    Flash(HCS.facingRight ? settings.Color_true : settings.Color_false);
+
                     if (settings.Show_CanFireball_InLogs_While_InTurnAround_Mode)
                     {
-                        if (HC.CanCast()) Log("Can Cast");
-                        else Log("Not able to use spells");
-                    }    
+                        Log(HC.CanCast() ? "Can Cast" : "Not able to use spells");
+                    }
                 }
 
             }
@@ -108,14 +101,12 @@ namespace Speedrun_Tricks_Visual_Helper
                 {
                     if (!HCS.onGround)
                     {
-                        if (HC.CanCast()) Flash(settings.Color_true);
-                        else Flash(settings.Color_false);
+                        Flash(HC.CanCast() ? settings.Color_true : settings.Color_false);
                     }
                 }
                 else
                 {
-                    if (HC.CanCast()) Flash(settings.Color_true);
-                    else Flash(settings.Color_false);
+                    Flash(HC.CanCast() ? settings.Color_true : settings.Color_false);
                 }
             }
 
@@ -125,30 +116,26 @@ namespace Speedrun_Tricks_Visual_Helper
                 {
                     if (HCS.onGround)
                     {
-                        if (CanDash()) Flash(settings.Color_true);
-
-                        else Flash(settings.Color_false);
+                        Flash(CanDash() ? settings.Color_true : settings.Color_false);
                     }
                 }
                 else
                 {
-                    if (CanDash()) Flash(settings.Color_true);
-
-                    else Flash(settings.Color_false);
+                    Flash(CanDash() ? settings.Color_true : settings.Color_false);
                 }
             }
 
             if (current_setting == 4)
             {
-                if (HCS.wallSliding)
-                {
-                    Flash(settings.Color_true);
-                }
-
-                if (!HCS.wallSliding)
-                {
-                    Flash(settings.Color_false);
-                }
+                Flash(CanWallJump() ? settings.Color_true : settings.Color_false);
+            }
+            if (current_setting == 5)
+            {
+                Flash(CanJump() ? settings.Color_true : settings.Color_false);
+            }
+            if (current_setting == 6)
+            {
+                Flash(CanAttack() ? settings.Color_true : settings.Color_false);
             }
         }
 
@@ -198,16 +185,30 @@ namespace Speedrun_Tricks_Visual_Helper
         private void ChangeSetting()
         {
             current_setting = WhichSetting;
-            if (WhichSetting == 4) WhichSetting = 0;
+            if (WhichSetting == 6) WhichSetting = 0;
             else WhichSetting++;
         }
         private bool CanDash()
         {
             return (bool) typeof(HeroController).GetMethod("CanDash", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(HeroController.instance, null);
         }
+        
+        private bool CanJump()
+        {
+            return (bool) typeof(HeroController).GetMethod("CanJump", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(HeroController.instance, null);
+        }
+        
+        private bool CanAttack()
+        {
+            return (bool) typeof(HeroController).GetMethod("CanAttack", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(HeroController.instance, null);
+        }
+        private bool CanWallJump()
+        {
+            return (bool) typeof(HeroController).GetMethod("CanWallJump", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(HeroController.instance, null);
+        }
 
-        #region Thank you 56 for allowing me to steal HC code. 
-        //The original can be found in: https://github.com/fifty-six/HollowKnight.Lightbringer
+
+        #region  //The original code can be found in: https://github.com/fifty-six/HollowKnight.Lightbringer
         private void CreateCanvas()
         {
             if (_canvas != null) return;
@@ -259,14 +260,20 @@ namespace Speedrun_Tricks_Visual_Helper
                     case 4:
                         textToPrint = "Mode: WallJump";
                         break;
+                    case 5:
+                        textToPrint = "Mode: Jump";
+                        break;
+                    case 6:
+                        textToPrint = "Mode: Attack";
+                        break;
                     default:
                         textToPrint = "Mode: None";
                         break;
                 }
             }
-            else if (WhatPrint == "No Key Bound, Please Bind a Key")
+            else if (WhatPrint == "No Key Present. Please Bind A Key")
             {
-                textToPrint = "No Key Bound, Please Bind a Key";
+                textToPrint = "No Key Present. Please Bind A Key";
             }
             else
             {
@@ -274,11 +281,6 @@ namespace Speedrun_Tricks_Visual_Helper
             }
 
             _textObj.text = textToPrint;
-            if (!settings.Current_Mode_Name_AlwaysVisible)
-            {
-                GameManager.instance.StartCoroutine((PleaseWaitToShowText(false,"Clear")));
-            }
-            
         }
 
         #endregion
@@ -289,6 +291,7 @@ namespace Speedrun_Tricks_Visual_Helper
             ModHooks.Instance.HeroUpdateHook -= Instance_HeroUpdateHook;
             ModHooks.Instance.SavegameLoadHook -= CheckKeyBind_saveGame;
             ModHooks.Instance.NewGameHook -= CheckKeyBind_newGame;
+            UnityEngine.Object.Destroy(_canvas);
         }
 
         
