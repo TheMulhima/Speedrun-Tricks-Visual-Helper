@@ -38,7 +38,7 @@ namespace Speedrun_Tricks_Visual_Helper
         {
             if (settings.ChangeModeKey == "")
             {
-                GameManager.instance.StartCoroutine((PleaseWaitToShowText(true, "No Key Present. Please Bind A Key")));
+                GameManager.instance.StartCoroutine((PleaseWaitToShowText(true, "No Key Bound, Please Bind a Key")));
             }
         }
 
@@ -46,7 +46,7 @@ namespace Speedrun_Tricks_Visual_Helper
         {
             if (settings.ChangeModeKey == "")
             {
-                GameManager.instance.StartCoroutine((PleaseWaitToShowText(true, "No Key Present. Please Bind A Key")));
+                GameManager.instance.StartCoroutine((PleaseWaitToShowText(true, "No Key Bound, Please Bind a Key")));
             }
         }
 
@@ -264,9 +264,9 @@ namespace Speedrun_Tricks_Visual_Helper
                         break;
                 }
             }
-            else if (WhatPrint == "No Key Present. Please Bind A Key")
+            else if (WhatPrint == "No Key Bound, Please Bind a Key")
             {
-                textToPrint = "No Key Present. Please Bind A Key";
+                textToPrint = "No Key Bound, Please Bind a Key";
             }
             else
             {
