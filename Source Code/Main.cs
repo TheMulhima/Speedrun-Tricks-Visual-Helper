@@ -53,7 +53,7 @@ namespace Speedrun_Tricks_Visual_Helper
 
             yield return new WaitForSecondsRealtime(3f);
             
-            PrintText("No Key Present. Please Bind a Key");
+            PrintText("No Key Bind Present please bind a key from the settings file.");
         }
         private void Instance_HeroUpdateHook()
         {
