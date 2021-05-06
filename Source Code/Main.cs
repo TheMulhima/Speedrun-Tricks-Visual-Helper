@@ -271,9 +271,9 @@ namespace Speedrun_Tricks_Visual_Helper
                         break;
                 }
             }
-            else if (WhatPrint == "No Key Present. Please Bind A Key")
+            else if (WhatPrint == "No Key Bind Present please bind a key from the settings file.")
             {
-                textToPrint = "No Key Present. Please Bind A Key";
+                textToPrint = "No Key Bind Present please bind a key from the settings file.";
             }
             else
             {
@@ -281,6 +281,17 @@ namespace Speedrun_Tricks_Visual_Helper
             }
 
             _textObj.text = textToPrint;
+
+            if (!settings.Current_Mode_Name_AlwaysVisible)
+            {
+                GameManager.instance.StartCoroutine(DeleteText(textToPrint));
+            }
+        }
+
+        private IEnumerator DeleteText(string calling_text)
+        {
+            yield return new WaitForSecondsRealtime(3f);
+            if (_textObj.text == calling_text) _textObj.text = "";
         }
 
         #endregion

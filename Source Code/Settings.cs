@@ -11,6 +11,7 @@ namespace Speedrun_Tricks_Visual_Helper
         public bool Turnaround_OnlyinAir = false; 
         public bool Fireball_OnlyinAir = false; 
         public bool Dash_OnlyonGround = false; 
+        public bool Current_Mode_Name_AlwaysVisible = false;
 
         public List<string> Available_Colors = new List<string>()
         {
