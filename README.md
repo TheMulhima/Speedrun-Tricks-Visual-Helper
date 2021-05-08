@@ -8,7 +8,7 @@ It is meant to be used as a indicator for how well you are doing the skips **aft
 - Download the [Modding API](https://github.com/TheMulhima/Speedrun-Tricks-Visual-Helper/blob/master/README.md#downloading-modding-api). 
 - From the releases tab, download the version that corresponds to your game version ([Current Patch](https://github.com/TheMulhima/Speedrun-Tricks-Visual-Helper/releases/download/v1.0.0.1/Speedrun_Tricks_Visual_Helper.dll) or [1.2.2.1](https://github.com/TheMulhima/Speedrun-Tricks-Visual-Helper/releases/download/v1.0.0.1-1.2.2.1/Speedrun_Tricks_Visual_Helper_1221.dll)) and place it in the [Mods folder](https://github.com/TheMulhima/Speedrun-Tricks-Visual-Helper/blob/master/README.md#mods-folder).
 - Run the game once with the mod installed and verify that it is installed by seeing if it appears on the top left of the title screen. Then close the game and open the .json file in the [saves folder](https://github.com/TheMulhima/Speedrun-Tricks-Visual-Helper/blob/master/README.md#saves-folder).
-- Add a number or lower case letter in `ChangeModeKey` to add a key bind for changing modes. e.g.  `ChangeModeKey = "b"`.
+- Add an [acceptable input](https://drive.google.com/file/d/1aebQ9DMngjk3ZO6x7XHk89D5I9q5armr/view?usp=sharing) in `ChangeModeKey` to add a key bind for changing modes. e.g.  `ChangeModeKey = "b"`.
 - Open the game and press the bound key to switch between modes.
 
 # Modes Currently Available:
