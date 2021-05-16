@@ -18,6 +18,5 @@ namespace Speedrun_Tricks_Visual_Helper
             "Note: Not to be changed. Only here for reference",
             "white","black", "blue", "cyan" ,"grey", "green", "magenta", "red", "yellow"
         };
-        public bool Show_CanFireball_InLogs_While_InTurnAround_Mode = false;
     } 
 }

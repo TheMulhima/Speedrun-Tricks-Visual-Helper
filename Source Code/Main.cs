@@ -13,15 +13,7 @@ namespace Speedrun_Tricks_Visual_Helper
         public override string GetVersion() => Assembly.GetExecutingAssembly().GetName().Version.ToString();
         
         internal static SpeedrunTricksVisualHelper Instance;
-        
-        public GlobalModSettings settings = new GlobalModSettings(); 
-
-        public override ModSettings GlobalSettings
-        {
-            get => settings;
-            set => settings = (GlobalModSettings) value;
-        }
-        private Text _textObj;
+        public Text _textObj;
         private GameObject _canvas;
         
         private int current_setting, WhichSetting;
@@ -36,24 +28,26 @@ namespace Speedrun_Tricks_Visual_Helper
         }
         private void CheckKeyBind_newGame()
         {
+            try
+            {
+                Input.GetKeyDown(settings.ChangeModeKey);
+            }
+            catch
+            {
+                settings.ChangeModeKey = "";
+                
+            }
+            
+            
             if (settings.ChangeModeKey == "")
             {
-                GameManager.instance.StartCoroutine((BindKey()));
+                GameManager.instance.gameObject.AddComponent<Bind_Key_GUI>();
             }
         }
 
         private void CheckKeyBind_saveGame(int id)
         {
             CheckKeyBind_newGame();
-        }
-
-        private IEnumerator BindKey()
-        {
-            yield return new WaitUntil(()=>HeroController.instance.CanInput());
-
-            yield return new WaitForSecondsRealtime(3f);
-            
-            PrintText("No Key Bind Present please bind a key from the settings file.");
         }
         private void Instance_HeroUpdateHook()
         {
@@ -66,76 +60,63 @@ namespace Speedrun_Tricks_Visual_Helper
             {
                 ChangeSetting();
                 PrintText("Change Setting");
-
             }
 
-            if (current_setting == 1)
+            switch (current_setting)
             {
-                if (settings.Turnaround_OnlyinAir)
-                {
-                    if (!HCS.onGround)
+                case 1:
+                    if (settings.Turnaround_OnlyinAir)
                     {
-                        Flash(HCS.facingRight ? settings.Color_true : settings.Color_false);
-
-                        if (settings.Show_CanFireball_InLogs_While_InTurnAround_Mode)
+                        if (!HCS.onGround)
                         {
-                            Log(HC.CanCast() ? "Can Cast" : "Not able to use spells");
+                            Flash(HCS.facingRight ? settings.Color_true : settings.Color_false);
                         }
                     }
-                }
-                else
-                {
-                    Flash(HCS.facingRight ? settings.Color_true : settings.Color_false);
-
-                    if (settings.Show_CanFireball_InLogs_While_InTurnAround_Mode)
+                    else
                     {
-                        Log(HC.CanCast() ? "Can Cast" : "Not able to use spells");
+                        Flash(HCS.facingRight ? settings.Color_true : settings.Color_false);
                     }
-                }
-
-            }
-
-            if (current_setting == 2)
-            {
-                if (settings.Fireball_OnlyinAir)
-                {
-                    if (!HCS.onGround)
+                    break;
+                
+                case 2:
+                    if (settings.Fireball_OnlyinAir)
+                    {
+                        if (!HCS.onGround)
+                        {
+                            Flash(HC.CanCast() ? settings.Color_true : settings.Color_false);
+                        }
+                    }
+                    else
                     {
                         Flash(HC.CanCast() ? settings.Color_true : settings.Color_false);
                     }
-                }
-                else
-                {
-                    Flash(HC.CanCast() ? settings.Color_true : settings.Color_false);
-                }
-            }
-
-            if (current_setting == 3)
-            {
-                if(settings.Dash_OnlyonGround)
-                {
-                    if (HCS.onGround)
+                    break;
+                
+                case 3:
+                    if(settings.Dash_OnlyonGround)
+                    {
+                        if (HCS.onGround)
+                        {
+                            Flash(CanDash() ? settings.Color_true : settings.Color_false);
+                        }
+                    }
+                    else
                     {
                         Flash(CanDash() ? settings.Color_true : settings.Color_false);
                     }
-                }
-                else
-                {
-                    Flash(CanDash() ? settings.Color_true : settings.Color_false);
-                }
-            }
-
-            if (current_setting == 4)
-            {
-                Flash(CanWallJump() ? settings.Color_true : settings.Color_false);
-            }
-            if (current_setting == 5)
-            {
-                Flash(CanJump() ? settings.Color_true : settings.Color_false);
-            }
-            if (current_setting == 6)
-            {
-                Flash(CanAttack() ? settings.Color_true : settings.Color_false);
+                    break;
+                case 4:
+                    Flash(CanWallJump() ? settings.Color_true : settings.Color_false);
+                    break;
+                case 5:
+                    Flash(CanJump() ? settings.Color_true : settings.Color_false);
+                    break;
+                case 6:
+                    Flash(CanAttack() ? settings.Color_true : settings.Color_false);
+                    break;
+                case 7:
+                    Flash(HC.CanOpenInventory() ? settings.Color_true : settings.Color_false);
+                    break;
             }
         }
 
@@ -206,10 +187,11 @@ namespace Speedrun_Tricks_Visual_Helper
         {
             return (bool) typeof(HeroController).GetMethod("CanWallJump", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(HeroController.instance, null);
         }
+        
 
 
         #region  //The original code can be found in: https://github.com/fifty-six/HollowKnight.Lightbringer
-        private void CreateCanvas()
+        public void CreateCanvas()
         {
             if (_canvas != null) return;
 
@@ -266,6 +248,9 @@ namespace Speedrun_Tricks_Visual_Helper
                     case 6:
                         textToPrint = "Mode: Attack";
                         break;
+                    case 7:
+                        textToPrint = "Mode: Inventory";
+                        break;
                     default:
                         textToPrint = "Mode: None";
                         break;
@@ -287,16 +272,15 @@ namespace Speedrun_Tricks_Visual_Helper
                 GameManager.instance.StartCoroutine(DeleteText(textToPrint));
             }
         }
-
-        private IEnumerator DeleteText(string calling_text)
+        public IEnumerator DeleteText(string calling_text)
         {
             yield return new WaitForSecondsRealtime(3f);
             if (_textObj.text == calling_text) _textObj.text = "";
         }
 
         #endregion
-        
-        
+
+
         public void Unload()
         {
             ModHooks.Instance.HeroUpdateHook -= Instance_HeroUpdateHook;
@@ -305,6 +289,18 @@ namespace Speedrun_Tricks_Visual_Helper
             UnityEngine.Object.Destroy(_canvas);
         }
 
+        #region 1432 specific
+        public GlobalModSettings settings = new GlobalModSettings(); 
+
+        public override ModSettings GlobalSettings
+        {
+            get => settings;
+            set => settings = (GlobalModSettings) value;
+        }
+        
+
+        #endregion
+        
         
     }
 }
