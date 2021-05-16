@@ -25,6 +25,13 @@ It is meant to be used as a indicator for how well you are doing the skips **aft
 4. WallJump
   - It shows when you can wall jump
   - e.g. of use -> QGA skip
+5. Jump
+  - It shows when you can jump
+6. Attack
+  - It shows when you can attack
+7. Inventory
+  - It shows when you can open inventory
+  - e.g. of use -> pacticing current patch inventory drops
 
 # Additional Options Explanation
 - Current_Mode_Name_AlwaysVisible -> if false, the "Mode : {Mode}" Text disappears after 3 seconds. if true, stays there forever.
